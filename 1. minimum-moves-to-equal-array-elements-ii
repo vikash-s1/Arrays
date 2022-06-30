@@ -1,0 +1,65 @@
+/*
+public class Solution {
+    public int minMoves2(int[] nums) {
+        int l = 0, r = nums.length - 1, sum = 0;
+        Arrays.sort(nums);
+        while (l < r) {
+            sum += nums[r] - nums[l];
+            l++;
+            r--;
+        }
+        return sum;
+    }
+}
+*/
+
+class Solution {
+    void swap (vector<int>& nums, int i, int pivotIndex) {
+        int temp = nums[i];
+        nums[i] = nums[pivotIndex];
+        nums[pivotIndex] = temp;
+    }
+    
+    int partition(vector<int>& nums, int start, int end) {
+        int pivotValue = nums[end];
+        int i = start;
+        
+        for(int j = start; j <= end; j++) {
+            if(nums[j] < pivotValue) {
+                swap(nums, i, j);
+                i++;
+            }
+        }
+        
+        swap(nums, end, i);
+        return i;
+    }
+    
+    int select(vector<int>& nums, int start, int end, int k) {
+        if(left == right) {
+            return nums[start];
+        }
+        
+        int pivotIndex = partition(nums, start, end);
+        if(k == pivotIndex) {
+            return nums[k];
+        } else if (k < pivotIndex) {
+            return select(nums, start, pivotIndex - 1, k);
+        } else {
+            return select(nums, pivotIndex + 1, end, k);
+        }
+        
+    }
+    
+public:
+    int minMoves2(vector<int>& nums) {
+        int sum = 0;
+        int n = nums.size();
+        int median = select(nums, 0, n - 1, n / 2);
+        for(int num: nums) {
+            sum += abs(median - num);
+        }
+        
+        return sum;
+    }
+};
