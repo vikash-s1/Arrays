@@ -1,0 +1,94 @@
+Think about what it means to do the operation "in place." You are not allowed to use a separate matrix to track changes, so you need to somehow mark rows and columns using the existing matrix.
+
+If you set a row or column to zero as soon as you find a zero, you may affect other cells that you haven't checked yet. Consider delaying the zeroing until after you’ve identified all the rows and columns that need to be changed.
+
+Use the first row and first column of the matrix as markers to remember which rows and columns should be zeroed. Be cautious with the (0,0) cell, as it’s shared between both the first row and first column—you might need an additional variable to track the state of the first column separately.
+
+
+```
+func setZeroes(matrix [][]int) {
+    // Your code goes here
+    m := len(matrix)
+    n := len(matrix[0])
+
+    rows := make([]bool, m)
+    cols := make([]bool, n)
+
+    for i := 0; i < m; i++ {
+        for j := 0; j < n; j++ {
+            if matrix[i][j] == 0 {
+                rows[i] = true
+                cols[j] = true
+            }
+        }
+    }
+
+    for i := 0; i < m; i++ {
+        for j := 0; j < n; j++ {
+            if rows[i] || cols[j] {
+                matrix[i][j] = 0
+            }
+        }
+    }
+}
+```
+
+```java
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        boolean[] rows = new boolean[m];
+        boolean[] cols = new boolean[n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    rows[i] = true;
+                    cols[j] = true;
+                }
+            }
+        } 
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (rows[i] || cols[j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+    }
+}
+```
+
+```c++
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        vector<bool> mrows(m, false);
+        vector<bool> mcols(n, false);
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if(matrix[i][j] == 0){
+                    mrows[i] = true;
+                    mcols[j] = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if(mrows[i] || mcols[j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+};
+```
