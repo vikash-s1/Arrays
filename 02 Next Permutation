@@ -1,0 +1,43 @@
+class Solution {
+    void getAllPermutation(int ind, vector<int> &nums, vector<vector<int>> &ans) {
+
+
+        if(ind == nums.size()) {
+            ans.push_back(nums);
+            return;
+        }
+
+        for (int i = ind; i < nums.size(); i++) {
+            swap(nums[ind], nums[i]);
+            getAllPermutation(ind+1, nums, ans);
+            swap(nums[ind], nums[i]);
+        }
+    }
+
+public:
+    void nextPermutation(vector<int>& nums) {
+        next_permutation(nums.begin(), nums.end());
+
+/*
+        vector<vector<int>> ans;
+
+        getAllPermutation(0, nums, ans);
+
+        sort(ans.begin(), ans.end());
+
+        int index = -1;
+        for (int i = 0; i < ans.size(); i++) {
+            if (nums == ans[i]) {
+                index = i;
+                break;
+            }
+        }
+
+        if(index == ans.size() - 1) {
+            nums = ans[0];
+        } else {
+            nums = ans[index + 1];
+        }
+        */
+    }
+};
